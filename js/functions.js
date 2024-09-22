@@ -22,7 +22,7 @@ const searchNumbers = (string) => {
   result = '';
   for(let i = 0; i < string.length; i++) {
     let currentChar = string[i];
-    if (currentChar >= '0' && currentChar <= 9) {
+    if (currentChar >= '0' && currentChar <= '9') {
       result += currentChar;
     }
   }
