@@ -1,34 +1,33 @@
 //Функция для проверки длины строки
-const isStringMatchesLength = (string, length) => {
-  return string.length <= length;
-}
+const isStringMatchesLength = (string, length) => string.length <= length;
 
 //Функция для выявления строк-палиндромов
 const isPalindrome = (string) => {
   let normalizedString = string.replaceAll(' ', '').toLowerCase();
   let reversedString = '';
-  for (let i = normalizedString.length - 1; i >= 0; i--)
-  {
+  for (let i = normalizedString.length - 1; i >= 0; i--) {
     reversedString += normalizedString[i];
   }
   return normalizedString === reversedString;
 }
 
 //Функция для поиска цифр в строке
-const searchNumbers = (string) => {
-  //Перестраховка на случай, если передано число
-  string = string.toString();
+const searchNumbers = (value) => {
+  let analyzingValue = value;
+  if(typeof newValue === 'number') {
+    analyzingValue = analyzingValue.toString();
+  }
 
-  result = '';
-  for(let i = 0; i < string.length; i++) {
-    let currentChar = string[i];
+  let result = '';
+  for(let i = 0; i < analyzingValue.length; i++) {
+    let currentChar = analyzingValue[i];
     if (currentChar >= '0' && currentChar <= '9') {
       result += currentChar;
     }
   }
 
   if (result.length > 0) {
-    return parseInt(result, 10);
+    return Number(result);
   }
   return NaN;
 }
