@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
-import {createPhotosArray} from './data.js';
+import { createPhotosArray } from './data.js';
+import { processThumbnails } from './thumbnails.js';
 
 const photos = createPhotosArray();
-console.log(photos);
+processThumbnails(photos);
