@@ -1,6 +1,6 @@
 export const renderPopupComments = (photo) => {
   const commentsList = document.querySelector('.social__comments');
-  commentsList.innerHTML = '';
+  commentsList.textContent = '';
 
   photo.comments.forEach((comment) => {
     const commentItem = document.createElement('li');
