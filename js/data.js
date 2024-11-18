@@ -46,8 +46,6 @@ const createComment = () => ({
   name: getRandomArrayElement(commentAuthors)
 });
 
-const photoComments = Array.from({length: getRandomInt(0, 30)}, createComment);
-
 const createPhoto = function() {
   const photoIdGenerator = getRandomIDfromRange(1, 25);
   const photoIdPathGenerator = getRandomIDfromRange(1, 25);
@@ -56,7 +54,7 @@ const createPhoto = function() {
     url: `photos/${photoIdPathGenerator()}.jpg`,
     description: getRandomArrayElement(photoDescriptions),
     likes: getRandomInt(15, 200),
-    comments: photoComments
+    comments: Array.from({length: getRandomInt(0, 30)}, createComment)
   };
 };
 
