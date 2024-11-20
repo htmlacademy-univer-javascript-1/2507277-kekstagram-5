@@ -21,8 +21,6 @@ export const renderPopup = (photo) => {
   renderPopupComments(photo);
 
   popupModal.classList.remove('hidden');
-  document.querySelector('.social__comment-count').classList.add('hidden');
-  document.querySelector('.comments-loader').classList.add('hidden');
   document.body.classList.add('modal-open');
 
   const closeButton = popupModal.querySelector('#picture-cancel');
