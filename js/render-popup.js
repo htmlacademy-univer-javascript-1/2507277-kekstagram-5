@@ -28,9 +28,9 @@ export const renderPopup = (photo) => {
     closePopup(popupModal);
   });
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      event.preventDefault();
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
       closePopup(popupModal);
     }
   });
