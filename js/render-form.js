@@ -51,6 +51,18 @@ export const renderForm = () => {
   const scaleDownBtn = document.querySelector('.scale__control--smaller');
   const effectRadios = document.querySelectorAll('.effects__radio');
   const submitButton = document.querySelector('.img-upload__submit');
+  const previewImage = document.querySelector('.img-upload__preview img');
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        previewImage.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
   const closeModal = () => {
     overlay.classList.add('hidden');
