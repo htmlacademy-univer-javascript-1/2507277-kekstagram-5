@@ -1,5 +1,3 @@
-import { processThumbnails } from './thumbnails.js';
-
 const BASE_URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
 
 const Urls = {
@@ -7,12 +5,25 @@ const Urls = {
   POST: '/'
 };
 
-const ErrorText = {
-  GET: 'Не удалось загрузить данные. Попробуйте обновить страницу',
-  POST: 'Не удалось отправить форму. Попробуйте ещё раз',
+const sendRequest = async ({ method, onSuccess, onError, body}) => {
+  try {
+    const response = await fetch(`${BASE_URL}${Urls[method]}`, {
+      method,
+      body,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    onSuccess(data);
+  } catch (error) {
+    onError();
+  }
 };
 
-const onError = (message) => {
+const showError = () => {
   const messageAlert = document.createElement('div');
   Object.assign(messageAlert.style, {
     position: 'fixed',
@@ -28,7 +39,7 @@ const onError = (message) => {
     zIndex: 10
   });
 
-  messageAlert.textContent = message;
+  messageAlert.textContent = 'Не удалось загрузить данные. Попробуйте обновить страницу';
   document.body.append(messageAlert);
 
   setTimeout(() => {
@@ -36,31 +47,15 @@ const onError = (message) => {
   }, 6000);
 };
 
-const sendRequest = async ({ method, onSuccess, body}) => {
-  try {
-    const response = await fetch(`${BASE_URL}${Urls[method]}`, {
-      method,
-      body,
-    });
-
-    if (!response.ok) {
-      throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    onSuccess(data);
-  } catch (error) {
-    onError(ErrorText[method]);
-  }
-};
-
-export const getData = () => sendRequest({
+export const getData = (onSuccess) => sendRequest({
   method: 'GET',
-  onSuccess: processThumbnails,
+  onSuccess,
+  onError: showError
 });
 
-export const sendData = async (body, onSuccess) => sendRequest({
+export const sendData = async (body, onSuccess, onError) => sendRequest({
   method: 'POST',
   onSuccess,
+  onError,
   body
 });
