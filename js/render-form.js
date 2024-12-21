@@ -8,6 +8,40 @@ const SubmitButtonText = {
   SENDING: 'Публикация...'
 };
 
+let isMessageOpen = false;
+
+const showMessage = (templateId, buttonClass) => {
+  const template = document.querySelector(templateId).content.cloneNode(true);
+  const messageElement = template.querySelector('section');
+  const button = template.querySelector(buttonClass);
+
+  const closeMessage = () => {
+    messageElement.remove();
+    isMessageOpen = false;
+  };
+
+  const onEscKeydown = (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeMessage();
+    }
+  };
+
+  const onClickOutside = (evt) => {
+    if (!messageElement.querySelector('div').contains(evt.target)) {
+      closeMessage();
+    }
+  };
+
+  button.addEventListener('click', closeMessage);
+  document.addEventListener('keydown', onEscKeydown);
+  document.addEventListener('click', onClickOutside);
+
+  isMessageOpen = true;
+
+  document.body.append(messageElement);
+};
+
 export const renderForm = () => {
   const fileInput = document.querySelector('.img-upload__input');
   const overlay = document.querySelector('.img-upload__overlay');
@@ -38,8 +72,13 @@ export const renderForm = () => {
 
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
-      if (document.activeElement === inputHashtag || document.activeElement === inputComment) {
+      if (document.activeElement === inputHashtag ||
+        document.activeElement === inputComment) {
         evt.stopPropagation();
+      } else if (isMessageOpen) {
+        evt.preventDefault();
+        document.querySelector('.message__error')?.remove();
+        isMessageOpen = false;
       } else {
         evt.preventDefault();
         closeModal();
@@ -70,14 +109,24 @@ export const renderForm = () => {
     submitButton.textContent = SubmitButtonText.IDLE;
   };
 
-  form.addEventListener('submit', async (evt) => {
+  form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     if (pristine.validate()) {
       blockSubmitButton();
 
-      sendData(new FormData(evt.target), closeModal)
-        .finally(unblockSubmitButton);
+      sendData(
+        new FormData(evt.target),
+        () => {
+          closeModal();
+          showMessage('#success', '.success__button');
+          unblockSubmitButton();
+        },
+        () => {
+          showMessage('#error', '.error__button');
+          unblockSubmitButton();
+        }
+      );
     }
   });
 };

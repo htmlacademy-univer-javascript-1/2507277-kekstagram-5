@@ -1,4 +1,5 @@
 import { renderForm } from './render-form.js';
-import { getData } from './api.js';
-getData();
+import { renderFilterThumbnails } from './filters.js';
+
+renderFilterThumbnails();
 renderForm();
