@@ -5,7 +5,7 @@ const MAX_COMMENT_LENGTH = 140;
 const form = document.querySelector('.img-upload__form');
 const inputHashtag = document.querySelector('.text__hashtags');
 const inputComment = document.querySelector('.text__description');
-const submitButton = form.querySelector('.submit-button');
+const submitButton = form.querySelector('.img-upload__submit');
 
 let errorMessage = '';
 
