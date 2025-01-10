@@ -2,7 +2,7 @@ const effectLevelContainer = document.querySelector('.img-upload__effect-level')
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectSlider = document.querySelector('.effect-level__slider');
 const effectRadios = document.querySelectorAll('.effects__radio');
-const previewImage = document.querySelector('.img-upload__preview');
+const previewImage = document.querySelector('.img-upload__preview img');
 
 const effectSettings = {
   none: {range: [0, 0], start: 0, step: 0, filter: null },
