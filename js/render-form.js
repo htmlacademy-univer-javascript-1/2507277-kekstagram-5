@@ -1,5 +1,5 @@
 import { pristine, onInput, inputHashtag, inputComment } from './validation.js';
-import { resetScale, scaleUp, scaleDown } from './img-scale.js';
+import { resetScale, onScaleUp, onScaleDown } from './img-scale.js';
 import { resetEffects, updateEffect } from './img-effects.js';
 import { sendData } from './api.js';
 
@@ -108,8 +108,8 @@ export const renderForm = () => {
 
   inputHashtag.addEventListener('input', onInput);
   inputComment.addEventListener('input', onInput);
-  scaleDownBtn.addEventListener('click', scaleDown);
-  scaleUpBtn.addEventListener('click', scaleUp);
+  onScaleDown(scaleDownBtn);
+  onScaleUp(scaleUpBtn);
 
   const blockSubmitButton = () => {
     submitButton.disabled = true;
